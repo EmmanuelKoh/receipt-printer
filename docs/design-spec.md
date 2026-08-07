@@ -180,9 +180,9 @@ throughout. Shell rules:
   page for each (preview + Print test, plus config and schedule for system
   slips). The Studio (template editor) is served at /studio. Detailed
   under Slips below.
-- Printer page: online dot per the 90-second rule, then a read-only
-  label/value grid (device seen, store driver, tick, print width, job
-  cap, version) and a quiet pointer to the hardware docs.
+- Printer page: title with no subtitle, online dot per the 90-second
+  rule, then a read-only label/value grid (printer seen, print width,
+  version — no infra internals) and a quiet pointer to the hardware docs.
 - Studio page: full-bleed workbench (the sidebar collapses on entry, a
   breadcrumb returns to where you came from). Toolbar card (template
   select mono, New/Save/Delete, Print right with the shortcut hint), then
@@ -213,8 +213,9 @@ each page's content zone.
    verticals (not separate cards). Cell: label / 28px mono number (8px
    below label) / 12px sub (2px below). Queue number is --red when > 0.
 2. System line (plain text row, 12px, 24px gaps): printer online dot
-   (6px --ink circle) + last device contact; store driver; tick interval;
-   version right-aligned --ink-faint.
+   (6px --ink circle) + last printer contact; version right-aligned
+   --ink-faint. No infra internals (store driver, tick interval): those
+   are operator diagnostics, not user copy.
 3. Dashed divider.
 4. RECENT: label + "view all →" link; the 3 newest history rows (name mono,
    source, status·time in the 92px rail). Same records as History: a
@@ -227,14 +228,16 @@ replaces the earlier Templates and Plugins pages.
 Index: title block + "New template" button right. Category groups (11px
 caps label + mono count chip + hairline rule), then a grid of cards each
 fixed at the receipt-paper width (full width when the column is narrower).
-Card: the full rendered receipt on white (inset at the paper width, chips
-overlaid top-left), a mono name with a corner arrow, a two-line
-description, and a footer (engine left, template count right). No Open
-button: the card IS the button, its border shifting to --ink-faint on
-hover. "New template" opens the Studio blank.
+Card: the full rendered receipt on white (inset at the paper width, the
+ENABLED/OFF chip overlaid top-left on system slips only), a mono name with
+a corner arrow, a two-line description, and a footer (template count,
+right-aligned). No kind or engine chips: "system"/"liquid" are internal
+vocabulary, not user copy. No Open button: the card IS the button, its
+border shifting to --ink-faint on hover. "New template" opens the Studio
+blank.
 
-Slip page: breadcrumb, mono title + description, kind (SYSTEM / TEMPLATE)
-and LIQUID chips, and for a template slip a two-step Delete (neutral
+Slip page: breadcrumb, mono title + description (no kind/engine chips),
+and for a template slip a two-step Delete (neutral
 outline; the red rules forbid a red button here). Left: the PREVIEW stage
 (the primary template rendered on white at the paper width) with a Print
 test button and mono status beneath. Right, for a system slip: a status
@@ -398,11 +401,17 @@ a whisper of print texture — a CSS mask of three tail-thresholded
 fractal-noise layers multiplied together (sparse speckle, an
 occasional splatter clump, and micro dust so fine it lands at half a
 pixel; the texture is authored at 480px and displayed at 240px to
-push the dust sub-pixel). Coverage stays near 1–2% so the ink reads
-solid at a glance; holes are always full paper-white, never faded
-gray, and never touch body text, keys, or the paper itself. (Band
-thresholds are forbidden — cutting a band out of smooth noise yields
-hollow rings, not clumps.) WORKBENCH actions (transport, inspector verbs,
+push the dust sub-pixel). Two weights: BUTTONS take the heavy bite
+(.bite-heavy, picked by eye on the live slider specimen: tails 9/8/6
+zeros per 48 vs the light 8/8/7, plus a FOURTH mid-dust layer at
+baseFrequency 0.3 with a 9-zero tail that widens the dust's size
+range — big splatter stays unchanged because bigger blobs read as
+damage, not grain, at button size); banners, stamps, and other solid
+surfaces keep the light three-layer bite (.bite, 8/8/7, ~1–2%) so
+the ink reads solid at a glance. Holes are always full
+paper-white, never faded gray, and never touch body text, keys, or
+the paper itself. (Band thresholds are forbidden — cutting a band
+out of smooth noise yields hollow rings, not clumps.) WORKBENCH actions (transport, inspector verbs,
 Load audio, Save as new, Print phrases) are REGISTER KEYS — raised
 fill, 1px ink edge, a hard unblurred 2px offset edge that is a SECOND
 STRIKE, not a shadow: always ink, in both themes (in dark it prints
@@ -429,14 +438,15 @@ arrows (tooltips carry shortcuts), printer glyph on print buttons.
 Domain actions (Ornament, Slide from prev, Split at playhead, Join
 next) stay as words. This three-material system is APP-WIDE (July
 2026): the shadcn Button primitive carries it everywhere — variant
-default is the committing knockout (with the bite), outline is the
+default is the committing knockout (with the heavy bite), outline is the
 register key with the second-strike edge, link is quiet lowercase
 text, destructive is the red knockout, and disabled is unprinted on
 all of them; mono 13px, radius 0. Committing actions per page:
 Sign in / Create account, Pair, New invite, Print test, Studio Save
 and Print, Photo Take and Print (the Photo page's own .btn copy
 carries the same materials; the engine's ids/classes are untouched).
-The shared accents live in globals.css: --key-shadow, .bite, .stamp,
+The shared accents live in globals.css: --key-shadow, .bite,
+.bite-heavy, .stamp,
 .stamp-red, .barcode (plus the existing .perf and .leader). PRINT
 VOCABULARY in the flow pages: Queue rows' Cancel/Requeue are quiet
 lowercase LEDGER ACTIONS in the rail — buttons no longer invade

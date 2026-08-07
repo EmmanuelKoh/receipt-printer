@@ -13,7 +13,7 @@ export async function POST(req: Request) {
   if (!owner) return unauthorizedJson();
   if (audioUploadMode() !== 'client') {
     return Response.json(
-      { error: 'client upload needs the redis driver' },
+      { error: "audio upload isn't available here" },
       { status: 400 },
     );
   }

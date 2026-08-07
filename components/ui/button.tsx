@@ -15,10 +15,10 @@ const buttonVariants = cva(
         // committing KNOCKOUT: solid ink, paper text, the bite; hover
         // double-strikes (the platen hits twice), press nudges down
         default:
-          'bite border border-ink bg-ink font-bold tracking-[0.02em] text-raised hover:[text-shadow:0.6px_0_currentColor] active:translate-y-px disabled:border-dashed disabled:border-border disabled:bg-transparent disabled:font-normal disabled:tracking-normal disabled:text-ink-faint disabled:[text-shadow:none]',
+          'bite-heavy border border-ink bg-ink font-bold tracking-[0.02em] text-raised hover:[text-shadow:0.6px_0_currentColor] active:translate-y-px disabled:border-dashed disabled:border-border disabled:bg-transparent disabled:font-normal disabled:tracking-normal disabled:text-ink-faint disabled:[text-shadow:none]',
         // the red knockout: failures and truly destructive commits only
         destructive:
-          'bite border border-red bg-red font-bold tracking-[0.02em] text-white hover:[text-shadow:0.6px_0_currentColor] active:translate-y-px focus-visible:ring-destructive/20 disabled:border-dashed disabled:border-border disabled:bg-transparent disabled:font-normal disabled:text-ink-faint disabled:[text-shadow:none]',
+          'bite-heavy border border-red bg-red font-bold tracking-[0.02em] text-white hover:[text-shadow:0.6px_0_currentColor] active:translate-y-px focus-visible:ring-destructive/20 disabled:border-dashed disabled:border-border disabled:bg-transparent disabled:font-normal disabled:text-ink-faint disabled:[text-shadow:none]',
         // workbench REGISTER KEY: raised fill, ink edge, and a hard
         // SECOND-STRIKE offset (ink in both themes); hover lifts the
         // key, press sinks it flat

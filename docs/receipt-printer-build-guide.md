@@ -148,21 +148,23 @@ Wire the ESP32 to the MAX3232 board's TTL side (4 wires):
 |------------------------|-------------------|
 | 3V3                    | VCC               |
 | GND                    | GND               |
-| TX (DevKit 17 / XIAO 43) | RXD             |
-| RX (DevKit 16 / XIAO 44) | TXD             |
+| TX (DevKit 17 / XIAO 43) | TXD             |
+| RX (DevKit 16 / XIAO 44) | RXD             |
 
 Notes:
-- Power VCC from **3V3**, not 5V nor a battery. (Aside: this is also why a
+- Power VCC from **3V3**, not 5V nor a battery. At 5V the module drives 5V
+  into the ESP32's RX pin, which is not 5V tolerant and can be permanently
+  damaged. (Aside: this is also why a
   bare LiPo can't power the board: a devkit's regulator needs ~4.4V+ in to
   make a stable 3.3V; a 3.7V cell browns out the chip the moment wifi
   transmits. Power the board from a wall brick.)
-- **The TX/RX label trap (read this before wiring).** Serial convention says
-  TX crosses to RXD, but cheap MAX3232 modules disagree about what their
-  TTL labels mean. On some, `RXD` is the module's input (cross: ESP32 TX →
-  RXD). On others (including the modules this build was done with) the
-  labels mean "connect your MCU's pin of this name here," so `RXD` is
-  actually the module's OUTPUT and the correct wiring is **straight-through:
-  ESP32 TX → TXD, ESP32 RX → RXD**. Wire it one way; if you get random
+- **The TX/RX label trap (read this before wiring).** The table above is
+  straight-through (ESP32 TX → TXD) on purpose: that is the wiring that
+  works on the modules this build was done with, and it is what the
+  running build uses. Serial convention says TX crosses to RXD, and on
+  some modules `RXD` really is the input, so the crossed wiring is
+  correct there. On these modules the labels mean "connect your MCU's
+  pin of this name here," so `RXD` is the module's OUTPUT. If you get random
   garble, dropped leading characters ("ello"), intermittent silence, or
   prints that only work sometimes (at every baud, on multiple modules),
   that is bus contention from the wrong choice: the module's output and the

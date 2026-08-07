@@ -9,7 +9,6 @@ import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { sessionOwner } from '@/app/_lib/dashboard-session';
 import { ReceiptPreview } from '@/components/receipt-preview';
-import { HEARTBEAT_SECONDS, STORE_DRIVER } from '@/config.js';
 import { listJobs } from '@/lib/job-store.js';
 import { listPlugins } from '@/lib/plugin-registry.js';
 import { getState } from '@/lib/state-store.js';
@@ -131,11 +130,9 @@ export default async function OverviewPage() {
             className={`inline-block h-1.5 w-1.5 rounded-full ${stale ? 'bg-ink-faint' : 'bg-ink'}`}
           />
           {lastSeen
-            ? `device seen ${agoText(lastSeen)}`
-            : 'no device contact yet'}
+            ? `printer seen ${agoText(lastSeen)}`
+            : 'no printer contact yet'}
         </span>
-        <span>store: {STORE_DRIVER}</span>
-        <span>tick: {HEARTBEAT_SECONDS}s</span>
         <span className="ml-auto text-ink-faint">v{pkg.version}</span>
       </div>
 

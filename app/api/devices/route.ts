@@ -42,7 +42,7 @@ export async function POST(req: Request) {
   if (joined) return Response.json({ device: joined, joined: true });
 
   return Response.json(
-    { error: 'no unexpired pairing or share code matches' },
+    { error: 'code not recognized or expired' },
     { status: 404 },
   );
 }

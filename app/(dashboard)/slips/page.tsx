@@ -79,9 +79,6 @@ export default async function SlipsPage() {
                     />
                   ) : null}
                   <div className="absolute left-2 top-2 flex items-center gap-1">
-                    <span className="rounded-[4px] border-[0.5px] border-black/10 bg-white/85 px-1.5 py-0.5 text-[10px] text-neutral-600 backdrop-blur">
-                      {r.kind}
-                    </span>
                     {r.kind === 'system' ? (
                       <span
                         className={`rounded-[4px] border-[0.5px] border-black/10 bg-white/85 px-1.5 py-0.5 text-[10px] backdrop-blur ${r.enabled ? 'text-neutral-600' : 'text-neutral-400'}`}
@@ -106,8 +103,7 @@ export default async function SlipsPage() {
                       {r.description}
                     </p>
                   ) : null}
-                  <div className="mt-auto flex items-center justify-between pt-2 text-[11px] text-ink-faint">
-                    <span>liquid</span>
+                  <div className="mt-auto flex items-center justify-end pt-2 text-[11px] text-ink-faint">
                     <span className="font-mono">
                       {r.templates.length} template
                       {r.templates.length === 1 ? '' : 's'}

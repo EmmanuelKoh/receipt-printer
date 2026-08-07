@@ -34,7 +34,7 @@ export function NewInviteForm() {
       <Input
         type="email"
         name="email"
-        placeholder="email (optional — pins the invite)"
+        placeholder="email (optional)"
         className="max-w-xs"
         aria-label="Invite email"
       />

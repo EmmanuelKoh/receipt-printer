@@ -16,7 +16,7 @@ export async function POST(req: Request) {
   // Raw-bytes jobs (source: tape) carry no template to re-render from.
   if (!job.template)
     return Response.json(
-      { error: 'raw-bytes job — print it again from its tool page' },
+      { error: 'printed from a tool — print it again there' },
       { status: 400 },
     );
 

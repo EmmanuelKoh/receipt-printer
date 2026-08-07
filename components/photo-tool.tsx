@@ -26,7 +26,7 @@ export function PhotoTool() {
           </span>
         </label>
         <label
-          className="btn photo-take pnl bite"
+          className="btn photo-take pnl bite-heavy"
           id="takeBtn"
           data-panel="source"
         >
@@ -254,7 +254,7 @@ export function PhotoTool() {
         </div>
         <div className="photo-actions">
           <span className="status" id="photoStatus" />
-          <button type="button" className="btn bite" id="printBtn" disabled>
+          <button type="button" className="btn bite-heavy" id="printBtn" disabled>
             Print
           </button>
         </div>

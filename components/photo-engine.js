@@ -76,7 +76,7 @@ export function initPhotoTool() {
   fetch('/templates').then(function (r) { return r.json(); }).then(function (list) {
     var t = list.find(function (x) { return x.name === 'Photo Print'; });
     if (t) TPL = t.template;
-    else statusEl.textContent = 'Photo Print template missing — run a tick to seed it';
+    else statusEl.textContent = 'photo template missing — open the Slips page once, then retry';
   });
 
   // Thermal dot gain compensation: printed dots bleed larger than their
@@ -821,7 +821,7 @@ export function initPhotoTool() {
         statusEl.textContent = '';
       });
     }).catch(function (e) {
-      statusEl.textContent = e.message;
+      statusEl.textContent = e instanceof TypeError ? 'connection failed' : e.message;
     });
   }
 
@@ -876,9 +876,9 @@ export function initPhotoTool() {
         source: 'photo',
       }),
     }).then(function (r) { return r.json(); }).then(function (body) {
-      statusEl.textContent = body.id ? 'queued ' + body.id : (body.error || 'failed');
+      statusEl.textContent = body.id ? 'queued' : (body.error || 'failed');
     }).catch(function (e) {
-      statusEl.textContent = e.message;
+      statusEl.textContent = e instanceof TypeError ? 'connection failed' : e.message;
     }).finally(function () {
       printBtn.disabled = false;
       printBtn.textContent = 'Print';

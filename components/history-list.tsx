@@ -54,7 +54,7 @@ export function HistoryList({ rows }: { rows: HistoryRow[] }) {
       const data = await res.json();
       setReprintStatus((s) => ({
         ...s,
-        [id]: res.ok ? `queued ${data.queued}` : data.error || 'reprint failed',
+        [id]: res.ok ? 'queued' : data.error || 'reprint failed',
       }));
     } catch {
       setReprintStatus((s) => ({ ...s, [id]: 'reprint failed' }));
