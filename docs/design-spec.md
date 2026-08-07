@@ -401,11 +401,17 @@ a whisper of print texture — a CSS mask of three tail-thresholded
 fractal-noise layers multiplied together (sparse speckle, an
 occasional splatter clump, and micro dust so fine it lands at half a
 pixel; the texture is authored at 480px and displayed at 240px to
-push the dust sub-pixel). Coverage stays near 1–2% so the ink reads
-solid at a glance; holes are always full paper-white, never faded
-gray, and never touch body text, keys, or the paper itself. (Band
-thresholds are forbidden — cutting a band out of smooth noise yields
-hollow rings, not clumps.) WORKBENCH actions (transport, inspector verbs,
+push the dust sub-pixel). Two weights: BUTTONS take the heavy bite
+(.bite-heavy, picked by eye on the live slider specimen: tails 9/8/6
+zeros per 48 vs the light 8/8/7, plus a FOURTH mid-dust layer at
+baseFrequency 0.3 with a 9-zero tail that widens the dust's size
+range — big splatter stays unchanged because bigger blobs read as
+damage, not grain, at button size); banners, stamps, and other solid
+surfaces keep the light three-layer bite (.bite, 8/8/7, ~1–2%) so
+the ink reads solid at a glance. Holes are always full
+paper-white, never faded gray, and never touch body text, keys, or
+the paper itself. (Band thresholds are forbidden — cutting a band
+out of smooth noise yields hollow rings, not clumps.) WORKBENCH actions (transport, inspector verbs,
 Load audio, Save as new, Print phrases) are REGISTER KEYS — raised
 fill, 1px ink edge, a hard unblurred 2px offset edge that is a SECOND
 STRIKE, not a shadow: always ink, in both themes (in dark it prints
@@ -432,14 +438,15 @@ arrows (tooltips carry shortcuts), printer glyph on print buttons.
 Domain actions (Ornament, Slide from prev, Split at playhead, Join
 next) stay as words. This three-material system is APP-WIDE (July
 2026): the shadcn Button primitive carries it everywhere — variant
-default is the committing knockout (with the bite), outline is the
+default is the committing knockout (with the heavy bite), outline is the
 register key with the second-strike edge, link is quiet lowercase
 text, destructive is the red knockout, and disabled is unprinted on
 all of them; mono 13px, radius 0. Committing actions per page:
 Sign in / Create account, Pair, New invite, Print test, Studio Save
 and Print, Photo Take and Print (the Photo page's own .btn copy
 carries the same materials; the engine's ids/classes are untouched).
-The shared accents live in globals.css: --key-shadow, .bite, .stamp,
+The shared accents live in globals.css: --key-shadow, .bite,
+.bite-heavy, .stamp,
 .stamp-red, .barcode (plus the existing .perf and .leader). PRINT
 VOCABULARY in the flow pages: Queue rows' Cancel/Requeue are quiet
 lowercase LEDGER ACTIONS in the rail — buttons no longer invade
