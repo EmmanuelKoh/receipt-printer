@@ -26,7 +26,7 @@ export async function POST(req: Request) {
   );
   if (!t) {
     return Response.json(
-      { error: `template "${slip.primaryTemplate}" not in store` },
+      { error: `template "${slip.primaryTemplate}" is missing` },
       { status: 404 },
     );
   }

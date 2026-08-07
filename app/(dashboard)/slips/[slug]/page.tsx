@@ -46,12 +46,6 @@ export default async function SlipPage({
             </p>
           </div>
           <div className="flex items-center gap-2">
-            <span className="rounded-[4px] border-[0.5px] border-border px-2 py-0.5 text-[11px] text-ink-muted">
-              {slip.kind}
-            </span>
-            <span className="rounded-[4px] border-[0.5px] border-border px-2 py-0.5 text-[11px] text-ink-muted">
-              liquid
-            </span>
             {slip.kind === 'template' ? (
               <DeleteTemplateButton name={slip.slug} />
             ) : null}
@@ -87,8 +81,7 @@ export default async function SlipPage({
           <section className="h-fit rounded-md border-[0.5px] border-border bg-raised px-4 py-4">
             <div className="text-[13px] font-semibold text-ink">Template</div>
             <p className="mt-2 text-xs text-ink-muted">
-              A stored template. Edit the Liquid source and default data in the
-              Studio; print it from there or with Print test.
+              Edit this template in the Studio.
             </p>
             <a
               href={`/studio?template=${encodeURIComponent(slip.slug)}`}

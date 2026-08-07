@@ -53,7 +53,7 @@ export async function PUT(req: Request, { params }: Params) {
   if (!owner) return unauthorizedJson();
   if (audioUploadMode() !== 'direct') {
     return Response.json(
-      { error: 'hosted audio uploads go straight to Blob' },
+      { error: 'audio upload failed' },
       { status: 400 },
     );
   }

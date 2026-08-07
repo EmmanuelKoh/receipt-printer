@@ -467,8 +467,8 @@ function Controls({ ctl, mode }: { ctl: Controller | null; mode: TapeMode }) {
           <>
             <p className="tape-hint">
               {phraseCount > 1
-                ? `Detection locks while phrase ${activePhrase + 1} has edits. Start over re-reads it; the edited phrase is kept as a snapshot.`
-                : 'Detection locks while the take has edits. Start over re-reads the recording; the edited tape is kept as a snapshot.'}
+                ? `Editing pauses detection. Start over re-detects phrase ${activePhrase + 1}.`
+                : 'Editing pauses detection. Start over re-detects from the recording.'}
             </p>
             <button
               type="button"
@@ -558,10 +558,6 @@ function Controls({ ctl, mode }: { ctl: Controller | null; mode: TapeMode }) {
           max={1000}
           fmt={(v) => `${v} ms`}
         />
-        <p className="tape-hint">
-          Changes re-render the finished take instantly; while recording they
-          apply to new tape only.
-        </p>
       </Group>
     </div>
   );

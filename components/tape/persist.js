@@ -13,8 +13,19 @@ async function jsonOrThrow(r) {
   return body;
 }
 
+// a failed fetch throws a browser TypeError ("Failed to fetch", "Load
+// failed"…) that varies by browser — the status line shows one stable
+// phrase instead
+async function api(url, init) {
+  try {
+    return await fetch(url, init);
+  } catch {
+    throw new Error('connection failed');
+  }
+}
+
 export async function fetchTakes() {
-  const { takes } = await jsonOrThrow(await fetch('/api/tape/takes'));
+  const { takes } = await jsonOrThrow(await api('/api/tape/takes'));
   return takes;
 }
 
@@ -30,7 +41,7 @@ export async function saveTake({
 }) {
   onStatus?.('saving take…');
   const { take, audio } = await jsonOrThrow(
-    await fetch('/api/tape/takes', {
+    await api('/api/tape/takes', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -52,7 +63,7 @@ export async function saveTake({
       contentType: 'audio/wav',
     });
     await jsonOrThrow(
-      await fetch(`/api/tape/takes/${take.id}`, {
+      await api(`/api/tape/takes/${take.id}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ audioUrl: result.url }),
@@ -60,7 +71,7 @@ export async function saveTake({
     );
   } else {
     await jsonOrThrow(
-      await fetch(`/api/tape/takes/${take.id}/audio`, {
+      await api(`/api/tape/takes/${take.id}/audio`, {
         method: 'PUT',
         headers: { 'Content-Type': 'audio/wav' },
         body: wav,
@@ -78,7 +89,7 @@ export async function updateTake(
 ) {
   onStatus?.('saving take…');
   const { take } = await jsonOrThrow(
-    await fetch(`/api/tape/takes/${id}`, {
+    await api(`/api/tape/takes/${id}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ name, noteCount, settings, doc }),
@@ -89,12 +100,12 @@ export async function updateTake(
 
 export async function loadTake(id) {
   const { take, settings, doc } = await jsonOrThrow(
-    await fetch(`/api/tape/takes/${id}`),
+    await api(`/api/tape/takes/${id}`),
   );
   if (!doc) throw new Error('take has no document');
   let audio = null;
   if (take.hasAudio) {
-    const r = await fetch(`/api/tape/takes/${id}/audio`);
+    const r = await api(`/api/tape/takes/${id}/audio`);
     if (r.ok) audio = await r.blob();
     // a missing recording degrades gracefully: the tape still renders,
     // edits, and prints — only playback and the pitch trace need audio
@@ -105,12 +116,12 @@ export async function loadTake(id) {
 // deletes are soft: the record is tombstoned and hidden for 30 days
 // before its payloads are purged — restoreTake undoes one
 export async function deleteTake(id) {
-  await jsonOrThrow(await fetch(`/api/tape/takes/${id}`, { method: 'DELETE' }));
+  await jsonOrThrow(await api(`/api/tape/takes/${id}`, { method: 'DELETE' }));
 }
 
 export async function restoreTake(id) {
   const { take } = await jsonOrThrow(
-    await fetch(`/api/tape/takes/${id}`, {
+    await api(`/api/tape/takes/${id}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ restore: true }),

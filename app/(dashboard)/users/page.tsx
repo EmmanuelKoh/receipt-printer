@@ -71,9 +71,7 @@ export default async function UsersPage() {
           ))}
           {users.length === 0 ? (
             <li className="py-2 text-xs text-ink-faint">
-              No accounts yet — you are signed in through the legacy owner
-              password. Create your own account with an invite below, or
-              scripts/create-user.js.
+              No accounts yet. Create one with an invite below.
             </li>
           ) : null}
         </ul>

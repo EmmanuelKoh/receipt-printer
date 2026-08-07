@@ -804,17 +804,23 @@ export function createTapeController({ canvas, traceCanvas, wrap, playhead }) {
 
   async function postPrintJob({ rows, bytes, name }) {
     const png = await rowsToPngBytes(rows);
-    const r = await fetch('/api/tape/print', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        bytes: b64(bytes),
-        png: b64(png),
-        width: 576,
-        height: rows.length,
-        name,
-      }),
-    });
+    let r;
+    try {
+      r = await fetch('/api/tape/print', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          bytes: b64(bytes),
+          png: b64(png),
+          width: 576,
+          height: rows.length,
+          name,
+        }),
+      });
+    } catch {
+      // browser TypeErrors ("Failed to fetch"…) vary — one stable phrase
+      throw new Error('connection failed');
+    }
     const body = await r.json();
     if (!body.id) throw new Error(body.error || 'print failed');
   }

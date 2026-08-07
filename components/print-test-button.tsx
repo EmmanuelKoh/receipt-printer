@@ -9,8 +9,10 @@ import { Button } from '@/components/ui/button';
 
 export function PrintTestButton({ slug }: { slug: string }) {
   const [status, setStatus] = useState('');
+  const [isError, setIsError] = useState(false);
 
   async function printTest() {
+    setIsError(false);
     setStatus('queueing…');
     try {
       const res = await fetch(
@@ -18,9 +20,15 @@ export function PrintTestButton({ slug }: { slug: string }) {
         { method: 'POST' },
       );
       const data = await res.json();
-      setStatus(res.ok ? `queued ${data.queued}` : data.error || 'failed');
+      if (res.ok) {
+        setStatus('queued');
+      } else {
+        setStatus(data.error || 'failed');
+        setIsError(true);
+      }
     } catch {
-      setStatus('failed');
+      setStatus('connection failed');
+      setIsError(true);
     }
   }
 
@@ -35,7 +43,7 @@ export function PrintTestButton({ slug }: { slug: string }) {
       </Button>
       {status ? (
         <span
-          className={`font-mono text-xs ${status === 'failed' || status.includes('not') ? 'text-red' : 'text-ink-muted'}`}
+          className={`font-mono text-xs ${isError ? 'text-red' : 'text-ink-muted'}`}
         >
           {status}
         </span>

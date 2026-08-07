@@ -88,6 +88,12 @@ function timeAgo(iso: string): string {
   return `${Math.floor(s / 86400)}d ago`;
 }
 
+// a failed fetch throws a browser TypeError ("Failed to fetch", "Load
+// failed"…) that varies by browser — show one stable phrase instead
+function fetchErrText(err: unknown): string {
+  return err instanceof TypeError ? 'connection failed' : (err as Error).message;
+}
+
 const DEFAULT_TPL =
   '<div style="display:flex;flex-direction:column;width:576px;font-family:Sans;background:#fff;color:#000;padding:24px">\n  <div style="display:flex;font-size:30px;font-weight:700">{{ title }}</div>\n</div>';
 
@@ -307,7 +313,7 @@ export function StudioEditor() {
         setStatus({ cls: 'active', text: `${w} x ${h}px · 1-bit` });
       } catch (err) {
         if ((err as Error).name === 'AbortError') return;
-        setStatus({ cls: 'error', text: (err as Error).message });
+        setStatus({ cls: 'error', text: fetchErrText(err) });
       }
     }, 400);
     return () => clearTimeout(timer);
@@ -323,10 +329,10 @@ export function StudioEditor() {
       if (trackingJobId.current) {
         const tracked = list.find((j) => j.id === trackingJobId.current);
         if (tracked?.status === 'done') {
-          showToast(`${trackingJobId.current} printed`);
+          showToast('Printed');
           trackingJobId.current = null;
         } else if (tracked?.status === 'failed') {
-          showToast(`${trackingJobId.current} failed`);
+          showToast('Print failed');
           trackingJobId.current = null;
         }
       }
@@ -434,13 +440,13 @@ export function StudioEditor() {
       const body = await resp.json();
       if (resp.ok) {
         trackingJobId.current = body.id;
-        showToast(`Queued ${body.id} · ${body.width}x${body.height}px`);
+        showToast(`Queued · ${body.width}x${body.height}px`);
         refreshJobs();
       } else {
         showToast(body.error || 'Queue failed');
       }
     } catch (err) {
-      showToast(`Queue failed: ${(err as Error).message}`);
+      showToast(`Queue failed: ${fetchErrText(err)}`);
     } finally {
       setPrinting(false);
     }

@@ -92,7 +92,7 @@ export async function PATCH(req: Request, { params }: Params) {
   }
   if (!hostOk) {
     return Response.json(
-      { error: 'audioUrl must be a Blob URL' },
+      { error: 'audio upload failed' },
       { status: 400 },
     );
   }

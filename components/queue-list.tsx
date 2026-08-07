@@ -157,7 +157,7 @@ export function QueueList({ initial }: { initial: QueueJob[] }) {
                 {job.inflight ? (
                   <>
                     <span className="hidden shrink-0 font-mono text-xs text-ink-faint sm:inline">
-                      claimed {job.claimedAgo}
+                      started {job.claimedAgo} ago
                     </span>
                     <button
                       type="button"
@@ -189,7 +189,7 @@ export function QueueList({ initial }: { initial: QueueJob[] }) {
                 {job.inflight ? (
                   <>
                     <span className="font-mono text-xs text-ink-faint">
-                      claimed {job.claimedAgo}
+                      started {job.claimedAgo} ago
                     </span>
                     <button
                       type="button"
